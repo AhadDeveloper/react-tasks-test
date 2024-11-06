@@ -12,13 +12,6 @@ const productSlice = createSlice({
         (item) => item.id !== action.payload
       );
     },
-    editProduct(state, action) {
-      state.products = state.products.map((item) => {
-        if (item.id === action.payload.id) {
-          return { ...action.payload.data, ...item };
-        }
-      });
-    },
   },
 });
 

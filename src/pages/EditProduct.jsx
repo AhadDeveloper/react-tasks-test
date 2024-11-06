@@ -9,9 +9,6 @@ const EditProductPage = () => {
   const products = useSelector((state) => state.products.products);
   const { productId, categoryId } = useParams();
   const dispatch = useDispatch();
-  const titleInputRef = useRef("");
-  const descriptionInputRef = useRef("");
-  const priceInputRef = useRef(0);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -22,16 +19,6 @@ const EditProductPage = () => {
   console.log(getProduct);
 
   const editHandler = () => {
-    // dispatch(
-    //   productActions.editProduct({
-    //     data: {
-    //       title: titleInputRef.current.value,
-    //       description: descriptionInputRef.current.value,
-    //       price: priceInputRef.current.value,
-    //     },
-    //     id: productId,
-    //   })
-    // );
     navigate(`/products/${categoryId}`);
   };
 
@@ -49,7 +36,6 @@ const EditProductPage = () => {
           type="text"
           value={getProduct?.title}
           className="border p-2 w-96"
-          ref={titleInputRef}
         />
         <img
           className="h-80 w-64"
@@ -59,11 +45,10 @@ const EditProductPage = () => {
         <textarea
           value={getProduct?.description}
           className="w-96 h-48 p-2 border"
-          ref={descriptionInputRef}
         ></textarea>
         <div>
           <label>Price: </label>
-          <input type="number" value={getProduct?.price} ref={priceInputRef} />
+          <input type="number" value={getProduct?.price} />
         </div>
         <button
           onClick={editHandler}
