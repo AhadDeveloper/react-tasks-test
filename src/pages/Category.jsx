@@ -3,23 +3,19 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 import { getProducts, deleteProduct } from "../redux/product/product-actions";
+import { productActions } from "../redux/product/product-slice";
 
 const CategoryPage = () => {
   const products = useSelector((state) => state.products.products);
-  const [productsByCategory, setProductsByCategory] = useState([]);
   const { categoryId } = useParams();
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(getProducts()).then(() => {
-      setProductsByCategory(
-        products.filter((item) => item.category === categoryId)
-      );
-    });
-  }, [dispatch]);
+  const productsByCategory = products.filter(
+    (item) => item.category === categoryId
+  );
 
   const deleteHandler = (id) => {
-    dispatch(deleteProduct(id));
+    dispatch(productActions.filterProducts(id));
   };
 
   return (

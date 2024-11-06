@@ -1,13 +1,18 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useParams } from "react-router";
+import { useParams, useNavigate } from "react-router";
 import { getProducts } from "../redux/product/product-actions";
 import { Link } from "react-router-dom";
+import { productActions } from "../redux/product/product-slice";
 
 const EditProductPage = () => {
   const products = useSelector((state) => state.products.products);
   const { productId, categoryId } = useParams();
   const dispatch = useDispatch();
+  const titleInputRef = useRef("");
+  const descriptionInputRef = useRef("");
+  const priceInputRef = useRef(0);
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(getProducts());
@@ -15,6 +20,20 @@ const EditProductPage = () => {
 
   const getProduct = products.find((item) => item.id === Number(productId));
   console.log(getProduct);
+
+  const editHandler = () => {
+    // dispatch(
+    //   productActions.editProduct({
+    //     data: {
+    //       title: titleInputRef.current.value,
+    //       description: descriptionInputRef.current.value,
+    //       price: priceInputRef.current.value,
+    //     },
+    //     id: productId,
+    //   })
+    // );
+    navigate(`/products/${categoryId}`);
+  };
 
   return (
     <div className="m-4">
@@ -30,6 +49,7 @@ const EditProductPage = () => {
           type="text"
           value={getProduct?.title}
           className="border p-2 w-96"
+          ref={titleInputRef}
         />
         <img
           className="h-80 w-64"
@@ -38,13 +58,17 @@ const EditProductPage = () => {
         />
         <textarea
           value={getProduct?.description}
-          className="w-96 h-48 p-2"
+          className="w-96 h-48 p-2 border"
+          ref={descriptionInputRef}
         ></textarea>
         <div>
           <label>Price: </label>
-          <input type="number" value={getProduct?.price} />
+          <input type="number" value={getProduct?.price} ref={priceInputRef} />
         </div>
-        <button className="p-2 bg-blue-500 rounded-md text-white w-14">
+        <button
+          onClick={editHandler}
+          className="p-2 bg-blue-500 rounded-md text-white w-14"
+        >
           Edit
         </button>
       </form>

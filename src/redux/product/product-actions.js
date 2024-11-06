@@ -1,33 +1,6 @@
 import axios from "axios";
 import { productActions } from "./product-slice";
 
-export const sendUserData = (data) => {
-  return async (dispatch) => {
-    const sendData = async () => {
-      const response = await fetch(
-        "https://for-testing-474f7-default-rtdb.firebaseio.com/user.json",
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error("Error while sending data");
-      }
-    };
-
-    try {
-      await sendData();
-    } catch (err) {
-      throw err;
-    }
-  };
-};
-
 export const getProducts = () => {
   return async (dispatch) => {
     try {
@@ -50,16 +23,17 @@ export const getProducts = () => {
 export const deleteProduct = (id) => {
   return async (dispatch) => {
     try {
-      const response = await axios.delete(
-        `https://fakestoreapi.com/products/${id}`
-      );
+      // const response = await axios.delete(
+      //   `https://fakestoreapi.com/products/${id}`
+      // );
 
-      if (!response.ok) {
-        throw new Error("Error while deleting data");
-      }
+      // if (!response.ok) {
+      //   throw new Error("Error while deleting data");
+      // }
 
-      console.log(response.data);
-      dispatch(productActions.deleteProduct(id));
+      // console.log(response.data);
+      console.log(id);
+      dispatch(productActions.filterProducts({ id: id }));
     } catch (err) {
       throw err;
     }

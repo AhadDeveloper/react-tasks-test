@@ -7,10 +7,17 @@ const productSlice = createSlice({
     setProducts(state, action) {
       state.products = action.payload;
     },
-    deleteProduct(state, action) {
+    filterProducts(state, action) {
       state.products = state.products.filter(
         (item) => item.id !== action.payload
       );
+    },
+    editProduct(state, action) {
+      state.products = state.products.map((item) => {
+        if (item.id === action.payload.id) {
+          return { ...action.payload.data, ...item };
+        }
+      });
     },
   },
 });
