@@ -1,9 +1,8 @@
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams, useNavigate } from "react-router";
 import { getProducts } from "../redux/product/product-actions";
 import { Link } from "react-router-dom";
-import { productActions } from "../redux/product/product-slice";
 
 const EditProductPage = () => {
   const products = useSelector((state) => state.products.products);
